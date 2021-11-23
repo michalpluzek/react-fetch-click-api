@@ -1,11 +1,9 @@
 import React from "react";
 
-const UsersList = () => {
-  return (
-    <ul>
-      <li>Użytkownik 1</li>
-    </ul>
-  );
+const UsersList = (props) => {
+  const users = props.users.map((user) => <li>{user.name.first}</li>);
+
+  return <ul>{users}</ul>;
 };
 
 export default UsersList;
