@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import ButtonFetchUsers from "./ButtonFetchUsers";
 import UsersList from "./UsersList";
 
 const API = "https://randomuser.me/api/?results=1";
 
-class App extends React.Component {
-  state = {
-    users: [],
-  };
+const App = () => {
+  const [users, setUsers] = useState([]);
 
-  handleDataFetch = () => {
+  const handleDataFetch = () => {
     fetch(API)
       .then((response) => {
         if (response.ok) {
@@ -22,23 +20,17 @@ class App extends React.Component {
       .then((data) => {
         const user = data.results;
 
-        this.setState((prev) => ({
-          users: prev.users.concat(user),
-        }));
+        setUsers((prevValue) => prevValue.concat(user));
       })
       .catch((error) => console.log(error));
   };
 
-  render() {
-    const { users } = this.state;
-
-    return (
-      <div>
-        <ButtonFetchUsers click={this.handleDataFetch} />
-        {users.length > 0 ? <UsersList users={users} /> : users}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <ButtonFetchUsers click={handleDataFetch} />
+      {users.length > 0 ? <UsersList users={users} /> : users}
+    </div>
+  );
+};
 
 export default App;
